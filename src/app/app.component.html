@@ -8,5 +8,9 @@
     </li>
     }
   </ul>
+  @if(currentUserId){
   <app-tasks [name]="currentUserName" />
+  } @else {
+  <p id="fallback">Select user to see his tasks</p>
+  }
 </main>

@@ -15,7 +15,7 @@ import { TasksComponent } from './tasks/tasks.component';
 export class AppComponent {
   title = 'first-angular-project';
   users = DUMMY_USERS;
-  currentUserId = DUMMY_USERS[0].id
+  currentUserId?: string
 
   get currentUserName(){
     return this.users.find(user => user.id === this.currentUserId)?.name
