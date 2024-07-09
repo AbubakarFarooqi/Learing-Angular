@@ -2,6 +2,14 @@ import { Component,Input,input,computed,Output,EventEmitter } from '@angular/cor
 import { DUMMY_USERS } from '../dummy-users';
 import { MapType } from '@angular/compiler';
 
+
+interface User {
+  id:string,
+  name: string,
+  avatar: string
+}
+
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -10,13 +18,18 @@ import { MapType } from '@angular/compiler';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
+
+  
     //Zone.js 
     // selectedUser = DUMMY_USERS[Math.floor(Math.random()*DUMMY_USERS.length)];
    
     //Input using Input Decorator
-    @Input({required:true}) id!: string
-    @Input({required:true}) avatar!: string
-    @Input({required:true}) name!: string
+    // @Input({required:true}) id!: string
+    // @Input({required:true}) avatar!: string
+    // @Input({required:true}) name!: string
+
+    //input an object
+    @Input({required:true}) user!: User
 
     //Output Data
     @Output() select = new EventEmitter<string>() 
@@ -30,7 +43,7 @@ export class UserComponent {
     
    // Compted value using getter
     get imagePath(){
-      return `assets/users/${this.avatar}`
+      return `assets/users/${this.user.avatar}`
     }
 
     //Computed Value using Computed
@@ -38,6 +51,6 @@ export class UserComponent {
 
 
     onSelectedUser() {
-      this.select.emit(this.id)
+      this.select.emit(this.user.id)
     }
 }
