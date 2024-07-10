@@ -18,7 +18,7 @@ export class AppComponent {
   currentUserId?: string
 
   get currentUserName(){
-    return this.users.find(user => user.id === this.currentUserId)?.name
+    return this.users.find(user => user.id === this.currentUserId)!.name
   }
 
   onUserSelect(id:string){

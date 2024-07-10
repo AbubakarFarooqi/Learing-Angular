@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
+import { type User_Task } from './user-task.model';
+
+
 
 @Component({
   selector: 'app-user-tasks',
@@ -8,5 +11,5 @@ import { Component } from '@angular/core';
   styleUrl: './user-tasks.component.css'
 })
 export class UserTasksComponent {
-
+  @Input() task?:User_Task
 }

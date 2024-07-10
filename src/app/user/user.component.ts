@@ -1,13 +1,7 @@
 import { Component,Input,input,computed,Output,EventEmitter } from '@angular/core';
 import { DUMMY_USERS } from '../dummy-users';
 import { MapType } from '@angular/compiler';
-
-
-interface User {
-  id:string,
-  name: string,
-  avatar: string
-}
+import { type User } from './user.model';
 
 
 @Component({
@@ -30,6 +24,7 @@ export class UserComponent {
 
     //input an object
     @Input({required:true}) user!: User
+    @Input({required:true}) isUserSelected!:boolean
 
     //Output Data
     @Output() select = new EventEmitter<string>() 
