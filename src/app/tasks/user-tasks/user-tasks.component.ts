@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component,EventEmitter,Input, Output } from '@angular/core';
 import { type User_Task } from './user-task.model';
 
 
@@ -11,5 +11,12 @@ import { type User_Task } from './user-task.model';
   styleUrl: './user-tasks.component.css'
 })
 export class UserTasksComponent {
-  @Input() task?:User_Task
+
+  @Input() task?:User_Task;
+  @Output() completeTask = new EventEmitter<string>(); 
+
+  onCompleteTask() {
+    this.completeTask.emit(this.task?.id)
+  }
+
 }

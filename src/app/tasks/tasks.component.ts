@@ -10,6 +10,7 @@ import { UserTasksComponent } from './user-tasks/user-tasks.component';
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent {
+
   @Input({required:true}) userId!:string
   @Input({required:true}) name!: string
 
@@ -18,5 +19,7 @@ export class TasksComponent {
   get getUserTasks(){
     return this.tasks.filter((task) => task.userId === this.userId)
   }
- 
+  onCompleteUserTask(id:string) {
+    this.tasks = this.tasks.filter((task)=> task.id !== id)
+  }
 }
