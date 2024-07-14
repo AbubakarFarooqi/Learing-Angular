@@ -2,7 +2,7 @@
   <header>
     <h2>{{ name }}'s Tasks</h2>
     <menu>
-      <button>Add task</button>
+      <button (click)="onAddTask()">Add task</button>
     </menu>
   </header>
   <ul>
@@ -15,4 +15,6 @@
     </li>
     }
   </ul>
+  @if(isAddTask){
+  <app-new-task (closeDialog)="onClosingDialog()" /> }
 </section>
