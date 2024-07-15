@@ -1,6 +1,7 @@
-import { Component,EventEmitter,Output,signal } from '@angular/core';
+import { Component,EventEmitter,Output,inject,Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type AddTaskModel } from './add-task.model';
+import { TaskService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -11,9 +12,10 @@ import { type AddTaskModel } from './add-task.model';
 })
 export class NewTaskComponent {
 
+  @Input({required:true}) userId!:string
   @Output() closeDialog = new EventEmitter<void>()
-  @Output() submitForm = new EventEmitter<AddTaskModel>()
 
+  private taskService = inject(TaskService)
   // enteredTitle = signal('');
   // enteredSummary = signal('');
   // enteredDate = signal('');
@@ -22,7 +24,8 @@ export class NewTaskComponent {
   enteredDate = '';
 
   onSubmit() {
-    this.submitForm.emit({title:this.enteredTitle,summary:this.enteredSummary,date:this.enteredDate})
+    this.taskService.addingTask({title:this.enteredTitle,summary:this.enteredSummary,date:this.enteredDate},this.userId)
+    this.closeDialog.emit()
   }
 
   onClosingDialog(){

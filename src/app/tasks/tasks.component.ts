@@ -35,8 +35,4 @@ export class TasksComponent {
   onClosingDialog(){
     this.isAddTask = false
   }
-  onAddingTask(task:AddTaskModel) {
-    this.taskService.addingTask(task,this.userId)
-    this.isAddTask = false
-  }
 }

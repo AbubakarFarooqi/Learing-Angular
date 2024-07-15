@@ -16,9 +16,6 @@
     }
   </ul>
   @if(isAddTask){
-  <app-new-task
-    (closeDialog)="onClosingDialog()"
-    (submitForm)="onAddingTask($event)"
-  />
+  <app-new-task [userId]="userId" (closeDialog)="onClosingDialog()" />
   }
 </section>
