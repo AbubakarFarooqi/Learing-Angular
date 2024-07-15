@@ -3,6 +3,7 @@ import { dummyTasks } from './Dummy-Tasks';
 import { UserTasksComponent } from './user-tasks/user-tasks.component';
 import { NewTaskComponent } from "./new-task/new-task.component";
 import { AddTaskModel } from './new-task/add-task.model';
+import { TaskService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -13,20 +14,20 @@ import { AddTaskModel } from './new-task/add-task.model';
 })
 export class TasksComponent {
 
-
+  //Dependency Injection
+  constructor(private taskService:TaskService){}
 
   @Input({required:true}) userId!:string
   @Input({required:true}) name!: string
 
   isAddTask = false;
 
-  tasks = dummyTasks
 
   get getUserTasks(){
-    return this.tasks.filter((task) => task.userId === this.userId)
+    return this.taskService.getUserTasks(this.userId)
   }
   onCompleteUserTask(id:string) {
-    this.tasks = this.tasks.filter((task)=> task.id !== id)
+    this.taskService.completeUserTask(id)
   }
   onAddTask() {
     this.isAddTask = true
@@ -35,13 +36,7 @@ export class TasksComponent {
     this.isAddTask = false
   }
   onAddingTask(task:AddTaskModel) {
-    this.tasks.unshift({
-      id: new Date().getTime().toString(),
-      dueDate: task.date,
-      summary:task.summary,
-      title: task.title,
-      userId: this.userId
-    })
+    this.taskService.addingTask(task,this.userId)
     this.isAddTask = false
   }
 }
