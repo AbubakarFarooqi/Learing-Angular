@@ -24,5 +24,9 @@ export class UserInputComponent {
       expectedReturn: +this.exectedReturn,
       duration: +this.duration
     })
+    this.initialInvestment = ''
+    this.anualInvestment = ''
+    this.exectedReturn = ''
+    this.duration = ''
   }
 }
