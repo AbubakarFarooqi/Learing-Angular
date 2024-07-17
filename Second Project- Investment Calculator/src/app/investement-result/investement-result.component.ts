@@ -4,8 +4,6 @@ import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-investement-result',
-  standalone: true,
-  imports: [CurrencyPipe],
   templateUrl: './investement-result.component.html',
   styleUrl: './investement-result.component.css'
 })

@@ -5,8 +5,8 @@ import { InvestementResultComponent } from "./investement-result/investement-res
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [HeaderComponent, UserInputComponent, InvestementResultComponent],
+  // standalone: true,
+  //imports: [HeaderComponent, UserInputComponent, InvestementResultComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {}
