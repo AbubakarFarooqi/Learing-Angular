@@ -1,3 +1,6 @@
+@if( _errorService.error() != '' ){
+<app-error-modal title="Error" [message]="_errorService.error()" />
+}
 <header>
   <img src="logo.png" alt="Stylized globe" />
   <h1>PlacePicker</h1>
