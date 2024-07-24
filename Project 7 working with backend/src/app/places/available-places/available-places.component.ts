@@ -1,10 +1,11 @@
-import { Component, inject, signal,OnInit, DestroyRef } from '@angular/core';
+import { Component, inject, signal, OnInit, DestroyRef } from '@angular/core';
 
 import { Place } from '../place.model';
 import { PlacesComponent } from '../places.component';
 import { PlacesContainerComponent } from '../places-container/places-container.component';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { PlacesService } from '../places.service';
 
 @Component({
   selector: 'app-available-places',
@@ -14,27 +15,28 @@ import { map } from 'rxjs';
   imports: [PlacesComponent, PlacesContainerComponent],
 })
 export class AvailablePlacesComponent implements OnInit {
-  _httpCLient = inject(HttpClient)
-  _destroyRef = inject(DestroyRef)
+  _placeService = inject(PlacesService);
+  _destroyRef = inject(DestroyRef);
   places = signal<Place[] | undefined>(undefined);
-  isFecthing = signal(false)
-  ngOnInit(): void {
-    this.isFecthing.update((val) => !val)
-    const subscription = this._httpCLient.get<{places:Place[]}>("http://localhost:3000/places").pipe(
-      map((resData) => resData.places) 
-    )
-    .subscribe({
-      next: (places)=>{
-        this.places.set(places) 
-      },
-      complete: ()=>{
-      this.isFecthing.update((val) => !val)
-      }
+  isFecthing = signal(false);
 
-    })
-    this._destroyRef.onDestroy(()=>{
-      subscription.unsubscribe()
-    })
+  ngOnInit(): void {
+    this.isFecthing.update((val) => !val);
+    const subscription = this._placeService.loadAvailablePlaces().subscribe({
+      next: (places) => {
+        this.places.set(places);
+      },
+      complete: () => {
+        this.isFecthing.update((val) => !val);
+      },
+    });
+
+    this._destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
 
+  onSelectPlace(place: Place) {
+    this._placeService.addPlaceToUserPlaces(place).subscribe();
+  }
 }
