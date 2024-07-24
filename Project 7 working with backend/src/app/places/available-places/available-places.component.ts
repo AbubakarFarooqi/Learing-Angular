@@ -16,19 +16,25 @@ import { map } from 'rxjs';
 export class AvailablePlacesComponent implements OnInit {
   _httpCLient = inject(HttpClient)
   _destroyRef = inject(DestroyRef)
+  places = signal<Place[] | undefined>(undefined);
+  isFecthing = signal(false)
   ngOnInit(): void {
+    this.isFecthing.update((val) => !val)
     const subscription = this._httpCLient.get<{places:Place[]}>("http://localhost:3000/places").pipe(
       map((resData) => resData.places) 
     )
     .subscribe({
       next: (places)=>{
         this.places.set(places) 
+      },
+      complete: ()=>{
+      this.isFecthing.update((val) => !val)
       }
+
     })
     this._destroyRef.onDestroy(()=>{
       subscription.unsubscribe()
     })
   }
 
-  places = signal<Place[] | undefined>(undefined);
 }
