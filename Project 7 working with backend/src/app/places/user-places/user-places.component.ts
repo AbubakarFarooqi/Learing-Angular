@@ -15,15 +15,12 @@ import { Place } from '../place.model';
 export class UserPlacesComponent implements OnInit {
   private _placeService = inject(PlacesService);
   _destroyRef = inject(DestroyRef);
-  places = signal<Place[] | undefined>(undefined);
   isFecthing = signal(false);
+  places = this._placeService.loadedUserPlaces;
   ngOnInit(): void {
     this.isFecthing.update((val) => !val);
 
     const subscription = this._placeService.loadUserPlaces().subscribe({
-      next: (places) => {
-        this.places.set(places);
-      },
       complete: () => {
         this.isFecthing.update((val) => !val);
       },
