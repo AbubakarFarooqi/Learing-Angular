@@ -71,5 +71,26 @@ export class PlacesService {
       );
   }
 
-  removeUserPlace(place: Place) {}
+  removeUserPlace(place: Place) {
+    const prevPlaces = this.userPlaces();
+
+    this.userPlaces.update((places) =>
+      places.filter((p) => {
+        return p.id !== place.id;
+      })
+    );
+
+    return this._httpCLient
+      .delete('http://localhost:3000/user-places/' + place.id)
+      .pipe(
+        tap({
+          error: () => {
+            this.userPlaces.set(prevPlaces);
+            this._errorService.showError(
+              'Something wenrt wrong while deleting user place'
+            );
+          },
+        })
+      );
+  }
 }
