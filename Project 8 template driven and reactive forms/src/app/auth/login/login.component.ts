@@ -1,9 +1,68 @@
+// import {
+//   afterNextRender,
+//   Component,
+//   DestroyRef,
+//   inject,
+//   viewChild,
+// } from '@angular/core';
+// import { EmailValidator, FormsModule, NgForm } from '@angular/forms';
+// import { debounceTime } from 'rxjs';
+
+// @Component({
+//   selector: 'app-login',
+//   standalone: true,
+//   templateUrl: './login.component.html',
+//   styleUrl: './login.component.css',
+//   imports: [FormsModule],
+// })
+// export class LoginComponent {
+//   private form = viewChild<NgForm>('form');
+//   private destroyRef = inject(DestroyRef);
+//   constructor() {
+//     afterNextRender(() => {
+//       const savedEmail = window.localStorage.getItem('email');
+//       if (savedEmail) {
+//         setTimeout(() => {
+//           this.form()?.controls['email'].setValue(savedEmail);
+//         });
+//       }
+
+//       const subscription = this.form()
+//         ?.valueChanges?.pipe(debounceTime(500))
+//         .subscribe({
+//           next: (value) => {
+//             window.localStorage.setItem('email', value.email);
+//           },
+//         });
+
+//       this.destroyRef.onDestroy(() => {
+//         subscription?.unsubscribe();
+//       });
+//     });
+//   }
+
+//   onSubmitForm(formData: NgForm) {
+//     console.log(formData.form);
+//   }
+// }
+
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {}
+export class LoginComponent {
+  loginForm = new FormGroup({
+    email: new FormControl('a'),
+    password: new FormControl(''),
+  });
+  onSubmit() {
+    console.log(this.loginForm.controls.email.value);
+    console.log(this.loginForm.controls.password.value);
+  }
+}
