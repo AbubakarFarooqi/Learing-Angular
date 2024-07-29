@@ -46,15 +46,18 @@
 //   }
 // }
 
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  EmailValidator,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { debounceTime, delay, of } from 'rxjs';
 
+// validation using factory function
 function mustContain(char: string) {
   return (control: AbstractControl) => {
     if (control.value.includes(char)) return null;
@@ -74,7 +77,28 @@ function mustContainQuestionMark(control: AbstractControl) {
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  destroyRef = inject(DestroyRef);
+
+  ngOnInit(): void {
+    const email = window.localStorage.getItem('email');
+    if (email) {
+      this.loginForm.patchValue({
+        email: email,
+      });
+    }
+    const subscription = this.loginForm.valueChanges
+      .pipe(debounceTime(3000))
+      .subscribe({
+        next: (value) => {
+          if (value.email) window.localStorage.setItem('email', value.email);
+        },
+      });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+  }
   loginForm = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
