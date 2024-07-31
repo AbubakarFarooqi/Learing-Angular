@@ -117,15 +117,21 @@
       </select>
     </div>
   </div>
-
-  <fieldset>
+  <fieldset formArrayName="source">
     <legend>How did you find us?</legend>
+    @for (item of sourceArray; track $index) {
     <div class="control">
-      <input type="checkbox" id="google" name="acquisition" value="google" />
+      <input
+        type="checkbox"
+        [id]="$index"
+        name="acquisition"
+        value="google"
+        [formControlName]="$index"
+      />
       <label for="google">Google</label>
     </div>
 
-    <div class="control">
+    <!-- <div class="control">
       <input type="checkbox" id="friend" name="acquisition" value="friend" />
       <label for="friend">Referred by friend</label>
     </div>
@@ -133,7 +139,8 @@
     <div class="control">
       <input type="checkbox" id="other" name="acquisition" value="other" />
       <label for="other">Other</label>
-    </div>
+    </div> -->
+    }
   </fieldset>
 
   <div class="control-row">

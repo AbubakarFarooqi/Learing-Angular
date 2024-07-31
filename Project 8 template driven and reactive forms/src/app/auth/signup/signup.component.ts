@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -15,6 +16,7 @@ import {
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
+  l = [1, 2, 3];
   signupForm = new FormGroup({
     emailControl: new FormControl('', {
       validators: [Validators.required],
@@ -39,7 +41,16 @@ export class SignupComponent {
       'student' | 'teacher' | 'employee' | 'founder' | 'other'
     >('student', { validators: [Validators.required] }),
     agree: new FormControl(true, { validators: [Validators.required] }),
+
+    source: new FormArray([
+      new FormControl(false),
+      new FormControl(true),
+      new FormControl(false),
+    ]),
   });
+  get sourceArray() {
+    return this.signupForm.controls.source.controls;
+  }
   onSubmit() {
     console.log(this.signupForm);
   }
