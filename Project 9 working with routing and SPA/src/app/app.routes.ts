@@ -20,7 +20,7 @@ export const routes: Routes = [
     component: UserTasksComponent,
     children: [
       {
-        path: 'task',
+        path: 'tasks',
         component: TasksComponent,
       },
       {

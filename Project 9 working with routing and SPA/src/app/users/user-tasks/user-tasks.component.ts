@@ -1,13 +1,13 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { UsersService } from '../users.service';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-user-tasks',
   standalone: true,
   templateUrl: './user-tasks.component.html',
   styleUrl: './user-tasks.component.css',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
 })
 export class UserTasksComponent {
   userId = input.required<string>();
