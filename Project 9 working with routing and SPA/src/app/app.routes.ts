@@ -1,4 +1,5 @@
 import {
+  CanDeactivateFn,
   CanMatch,
   CanMatchFn,
   RedirectCommand,
@@ -17,10 +18,26 @@ import { inject } from '@angular/core';
 const dummyCanMatchRouteGuard: CanMatchFn = (route, segments) => {
   const router = inject(Router);
   let rnd = Math.random();
-  if (rnd < 0.5) {
+  //if (rnd < 0.5) {
+  return true;
+  //}
+  return new RedirectCommand(router.parseUrl('/unauthorized'));
+};
+
+const canLeaveNewTaskComponenet: CanDeactivateFn<NewTaskComponent> = (
+  component
+) => {
+  if (component.isSubmit) {
     return true;
   }
-  return new RedirectCommand(router.parseUrl('/unauthorized'));
+  if (
+    component.enteredDate() ||
+    component.enteredSummary() ||
+    component.enteredTitle()
+  ) {
+    return window.confirm('Do you want to leave');
+  }
+  return true;
 };
 
 export const routes: Routes = [
@@ -49,6 +66,7 @@ export const routes: Routes = [
       {
         path: 'new',
         component: NewTaskComponent,
+        canDeactivate: [canLeaveNewTaskComponenet],
       },
     ],
   },
