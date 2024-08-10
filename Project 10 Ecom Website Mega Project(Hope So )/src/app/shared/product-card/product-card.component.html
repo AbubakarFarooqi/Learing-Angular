@@ -6,7 +6,9 @@
       alt=""
     />
   </div>
-  <span class="font-bold text-xl">title</span>
-  <app-star-rating [readonly]="true" [rating]="5" />
-  <span>price</span>
+  <span class="font-bold text-xl">{{ title }}</span>
+  @if(rating){
+  <app-star-rating [readonly]="true" [rating]="rating" />
+  }
+  <span class="font-bold text-2xl">{{ price | currency }}</span>
 </div>
