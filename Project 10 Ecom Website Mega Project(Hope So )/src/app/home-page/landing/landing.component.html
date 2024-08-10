@@ -1,1 +1,19 @@
-<p>landing works!</p>
+<div id="parent" class="flex flex-row w-screen max-w-full h-screen">
+  <div class="flex flex-col justify-center pl-28">
+    <h1 class="font-extrabold text-3xl">FIND CLOTHES THAT MATCH YOUR STYLE</h1>
+    <p class="mt-8">
+      Browse through our diverse range of meticulously crafted garments,
+      designed to bring out your individuality and cater to your sense of style.
+    </p>
+    <button customClass="mt-8" customButton mode="dark">
+      <span> Shop Now </span>
+    </button>
+    <div class="mt-8 flex flex-row justify-between">
+      <app-counter [value]="200" text="International Brands" [duration]="2" />
+      <app-counter [value]="2000" text="High-Quality Products" [duration]="2" />
+      <app-counter [value]="30000" text="Happy Customers" [duration]="2" />
+    </div>
+  </div>
+
+  <img src="/public/home-page-image.png" />
+</div>

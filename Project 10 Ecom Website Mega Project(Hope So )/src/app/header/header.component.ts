@@ -5,13 +5,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { DarkButtonComponent } from '../shared/dark-button/dark-button.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
-  imports: [ReactiveFormsModule, DarkButtonComponent],
+  imports: [ReactiveFormsModule],
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {

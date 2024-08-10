@@ -1,1 +1,9 @@
-<p>counter works!</p>
+<div class="flex flex-col">
+  <div class="font-bold text-2xl tracking-wider">
+    <span [countUp]="value()" [options]="{ duration: duration() }"> 0 </span>
+    <span>+</span>
+  </div>
+  <span class="text-gray-700">
+    {{ text() }}
+  </span>
+</div>
