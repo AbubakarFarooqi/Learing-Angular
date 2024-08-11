@@ -6,10 +6,12 @@ import {
   withRouterConfig,
 } from '@angular/router';
 import { StarRatingConfigService, StarRatingModule } from 'angular-star-rating';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     StarRatingConfigService,
+    provideHttpClient(),
     // importProvidersFrom(StarRatingModule),
     provideRouter(
       routes,

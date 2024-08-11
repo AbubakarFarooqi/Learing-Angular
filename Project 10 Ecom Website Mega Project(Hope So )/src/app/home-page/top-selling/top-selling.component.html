@@ -1,4 +1,21 @@
 <div class="h-screen">
   <h1 class="flex justify-center text-3xl font-bold mt-20">Top Selling</h1>
-  <app-product-card title="aa" [price]="200" [rating]="3" />
+  <div class="flex justify-center">
+    <div class="products mt-12">
+      @for(product of products; track product.productID){
+      <!-- <app-product-card title="aa" [price]="200" [rating]="3" /> -->
+      <app-product-card
+        [imageUrl]="product.imageUrl"
+        [title]="product.name"
+        [price]="product.price"
+        [rating]="3"
+      />
+      }
+    </div>
+  </div>
+  @if(isPageAvailable){
+  <div class="flex justify-center mt-10 time">
+    <button (click)="onViewMore()" customButton mode="light">View More</button>
+  </div>
+  }
 </div>

@@ -7,7 +7,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
   templateUrl: './custom-button.component.html',
   styleUrl: './custom-button.component.css',
   host: {
-    class: 'rounded-3xl w-36 p-3 pl-6 pr-6 border-2',
+    class: 'rounded-3xl w-36 p-3 pl-6 pr-6 border-2 transition duration-300',
   },
 })
 export class CustomButtonComponent implements OnInit {
@@ -17,9 +17,14 @@ export class CustomButtonComponent implements OnInit {
     }
     if (this.mode === 'dark') {
       this.classes =
-        this.classes + ' ' + 'bg-black text-white border-white-400';
+        this.classes +
+        ' ' +
+        'bg-black text-white border-white-400 hover:bg-white hover:text-black';
     } else if (this.mode === 'light') {
-      this.classes = this.classes + ' ' + 'bg-white text-black border-gray-400';
+      this.classes =
+        this.classes +
+        ' ' +
+        'bg-white text-black border-gray-400 hover:bg-black hover:text-white';
     }
   }
   @HostBinding('class') classes: string = '';

@@ -10,6 +10,7 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class ProductCardComponent {
   @Input({ required: true }) title!: string;
+  @Input({ required: true }) imageUrl!: string;
   @Input({ required: true }) price!: number;
   @Input() rating?: number;
 }
