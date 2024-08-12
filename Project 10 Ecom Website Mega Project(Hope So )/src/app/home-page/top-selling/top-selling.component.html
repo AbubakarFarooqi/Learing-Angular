@@ -1,15 +1,25 @@
-<div class="h-screen">
+<div class="">
   <h1 class="flex justify-center text-3xl font-bold mt-20">Top Selling</h1>
   <div class="flex justify-center">
-    <div class="products mt-12">
+    <div class="products mt-12 overflow-hidden">
       @for(product of products; track product.productID){
-      <!-- <app-product-card title="aa" [price]="200" [rating]="3" /> -->
-      <app-product-card
-        [imageUrl]="product.imageUrl"
-        [title]="product.name"
-        [price]="product.price"
-        [rating]="3"
-      />
+      <div [@divParent]="divParentState" class="">
+        <app-product-card
+          [imageUrl]="product.imageUrl"
+          [title]="product.name"
+          [price]="product.price"
+          [rating]="3"
+        />
+      </div>
+      } @for(product of newProducts; track product.productID){
+      <div [@divParent]="divParentState" class="h-0 overflow-hidden">
+        <app-product-card
+          [imageUrl]="product.imageUrl"
+          [title]="product.name"
+          [price]="product.price"
+          [rating]="3"
+        />
+      </div>
       }
     </div>
   </div>

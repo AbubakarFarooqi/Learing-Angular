@@ -1,0 +1,14 @@
+<div class="mt-48 mb-48">
+  <h1 class="text-3xl font-serif font-extrabold ml-14 mb-4">
+    OUR HAPPY CUSTOMERS
+  </h1>
+  <div class="flex justify-center gap-3">
+    @for(review of reviews ; track review.reviewID){
+    <app-review
+      [comment]="review.comment"
+      [rating]="review.rating"
+      [userName]="review.userName"
+    />
+    }
+  </div>
+</div>
