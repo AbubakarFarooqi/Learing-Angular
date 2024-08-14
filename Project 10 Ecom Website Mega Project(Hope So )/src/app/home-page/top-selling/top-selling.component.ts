@@ -1,24 +1,15 @@
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  inject,
-  ViewChild,
-} from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import {
   trigger,
   state,
   style,
   transition,
   animate,
-  query,
 } from '@angular/animations';
 import { ProductCardComponent } from '../../shared/product-card/product-card.component';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../models/product.model';
 import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
-import { height } from '@fortawesome/free-solid-svg-icons/faStar';
-import { expand } from 'rxjs';
 
 @Component({
   selector: 'app-top-selling',

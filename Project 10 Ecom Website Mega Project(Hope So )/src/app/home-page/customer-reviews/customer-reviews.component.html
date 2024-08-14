@@ -1,4 +1,4 @@
-<div class="mt-48 mb-48">
+<!-- <div class="mt-48 mb-48">
   <h1 class="text-3xl font-serif font-extrabold ml-14 mb-4">
     OUR HAPPY CUSTOMERS
   </h1>
@@ -9,6 +9,80 @@
       [rating]="review.rating"
       [userName]="review.userName"
     />
+    }
+  </div>
+</div> -->
+
+<!-- <div class="mt-48 mb-48">
+    <h1 class="text-3xl font-serif font-extrabold ml-14 mb-4">
+      OUR HAPPY CUSTOMERS
+    </h1>
+    <div class="relative flex items-center justify-center">
+      <button (click)="prevSlide()" class="absolute left-0 ml-4 z-10">
+        &#10094;
+      </button>
+
+      <div class="overflow-hidden w-full">
+        <div
+          class="ml-20 overflow-hidden mr-28 flex gap-3 transition-transform duration-500 ease-in-out"
+          [ngStyle]="{ transform: 'translateX(' + currentTranslateX + '%)' }"
+        >
+          @for(review of reviews ; track review.reviewID){
+          <app-review
+            class="w-1/3"
+            [comment]="review.comment"
+            [rating]="review.rating"
+            [userName]="review.userName"
+          />
+          }
+        </div>
+      </div>
+
+      <button (click)="nextSlide()" class="absolute right-0 mr-4 z-10">
+        &#10095;
+      </button>
+    </div>
+  </div> -->
+
+<div class="mt-48 mb-48">
+  <h1 class="text-3xl font-serif font-extrabold ml-14 mb-4">
+    OUR HAPPY CUSTOMERS
+  </h1>
+  <div class="relative flex items-center justify-center">
+    <!-- Left Arrow -->
+    @if(this.currentSlide > 0){
+
+    <button (click)="prevSlide()" class="absolute left-0 ml-4 z-10">
+      &#10094;
+    </button>
+    }
+
+    <!-- Container for Reviews -->
+    <div class="overflow-hidden w-full">
+      <div
+        class="flex transition-transform duration-500 ease-in-out"
+        [ngStyle]="{ transform: 'translateX(' + currentTranslateX + '%)' }"
+      >
+        <!-- Group reviews in sets of three -->
+        <ng-container *ngFor="let group of groupedReviews">
+          <div class="flex min-w-full gap-3 justify-center">
+            <app-review
+              *ngFor="let review of group"
+              [comment]="review.comment"
+              [rating]="review.rating"
+              [userName]="review.userName"
+            ></app-review>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Right Arrow -->
+    @if(isPageAvailable || (this.currentSlide < this.groupedReviews.length -
+    1)){
+    <button (click)="onViewMore()" class="absolute right-0 mr-4 z-10">
+      &#10095;
+    </button>
     }
   </div>
 </div>
