@@ -3,7 +3,7 @@
   <div class="flex justify-center">
     <div class="products mt-12 overflow-hidden">
       @for(product of products; track product.productID){
-      <div [@divParent]="divParentState" class="">
+      <div [@divParent]="divParentState" class="pt-16">
         <app-product-card
           [imageUrl]="product.imageUrl"
           [title]="product.name"
@@ -12,7 +12,7 @@
         />
       </div>
       } @for(product of newProducts; track product.productID){
-      <div [@divParent]="divParentState" class="h-0 overflow-hidden">
+      <div [@divParent]="divParentState" class="pt-16 h-0 overflow-hidden">
         <app-product-card
           [imageUrl]="product.imageUrl"
           [title]="product.name"

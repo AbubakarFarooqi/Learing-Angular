@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApiResponse } from '../../models/apiResponse.model';
 import { Product } from '../../models/product.model';
 import { map, tap } from 'rxjs';
+import { type TopFourProducts } from '../../models/topFourProduct.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,29 @@ export class ProductService {
         map((res) => {
           console.log(res);
           return res.data;
+        })
+      );
+  }
+
+  getFourProductOfEachCategory() {
+    return this._httpClient
+      .get<ApiResponse<{ [key: string]: Product[] }>>(
+        `https://localhost:7147/api/Product/GetFourOfAllCategories`
+      )
+      .pipe(
+        map((res) => {
+          const manipulatedData: TopFourProducts[] = [];
+          for (let key in res.data) {
+            const categoryId = key.split(',')[0];
+            const categoryName = key.split(',')[1];
+            manipulatedData.push({
+              categoryId: categoryId,
+              categoryName: categoryName,
+              value: res.data[key],
+            });
+          }
+          console.log(manipulatedData);
+          return manipulatedData;
         })
       );
   }

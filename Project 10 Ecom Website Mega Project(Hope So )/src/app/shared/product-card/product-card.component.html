@@ -1,14 +1,16 @@
-<div class="flex flex-col">
+<div
+  class="group flex flex-col hover:-translate-y-10 transition duration-300 hover:shadow-2xl rounded-3xl"
+>
   <div id="imgDiv" class="h-72 w-64 overflow-hidden rounded-3xl">
     <img
-      class="h-full w-full flex items-center justify-center"
+      class="h-full w-full flex items-center justify-center group-hover:scale-110 transition duration-300"
       [src]="imageUrl"
       alt=""
     />
   </div>
-  <span class="font-bold text-xl">{{ title }}</span>
+  <span class="ml-2 font-bold text-xl">{{ title }}</span>
   @if(rating){
   <app-star-rating [readonly]="true" [rating]="rating" />
   }
-  <span class="font-bold text-2xl">{{ price | currency }}</span>
+  <span class="ml-2 font-bold text-2xl">{{ price | currency }}</span>
 </div>
