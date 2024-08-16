@@ -1,0 +1,22 @@
+<div class="p-10">
+  <div>
+    <span class="text-3xl font-extrabold">{{ categoryName }}</span>
+    <div class="mt-8 mb-8 grid grid-cols-4 ml-12 gap-x-0">
+      @for(product of products; track product.productID){
+      <app-product-card
+        class="mt-8 mb-8 flex justify-center"
+        [title]="product.name"
+        [imageUrl]="product.imageUrl"
+        [price]="product.price"
+        [rating]="4"
+      />
+      }
+    </div>
+    <!-- <ngb-pagination [collectionSize]="70" [(page)]="page" aria-label="Default pagination" /> -->
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [totalRecords]="this.totalProducts"
+      [rows]="this.pageSize"
+    />
+  </div>
+</div>

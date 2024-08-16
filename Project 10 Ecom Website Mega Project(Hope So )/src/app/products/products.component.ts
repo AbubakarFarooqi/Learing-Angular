@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { ProductCardComponent } from '../shared/product-card/product-card.component';
 import { TopFourProducts } from '../../models/topFourProduct.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, RouterLink],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
