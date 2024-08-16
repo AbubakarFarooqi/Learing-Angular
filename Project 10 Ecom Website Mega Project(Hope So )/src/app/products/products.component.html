@@ -2,7 +2,7 @@
   @for(group of fourProducts ; track group.categoryId){
   <div>
     <span class="text-3xl font-extrabold">{{ group.categoryName }}</span>
-    <div class="mt-16 mb-16 flex flex-row justify-start ml-12 gap-16">
+    <div class="mt-8 mb-8 flex flex-row justify-start ml-12 gap-16">
       @for(product of group.value ; track product.productID){
 
       <app-product-card
