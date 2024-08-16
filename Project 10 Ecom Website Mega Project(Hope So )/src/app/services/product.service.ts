@@ -10,34 +10,19 @@ import { type TopFourProducts } from '../../models/topFourProduct.model';
 })
 export class ProductService {
   _httpClient = inject(HttpClient);
-  productsCount?: number;
-  pageSize = 4;
-  totalPages?: number;
-  currentPage = 0;
-  constructor() {
-    this._httpClient
+  getProductsCount() {
+    return this._httpClient
       .get<ApiResponse<number>>('https://localhost:7147/api/Product/GetCount')
-      .subscribe({
-        next: (res) => {
-          this.productsCount = res.data;
-          this.totalPages = Math.ceil(this.productsCount / this.pageSize);
-        },
-      });
+      .pipe(
+        map((res) => {
+          return res.data;
+        })
+      );
   }
-
-  setTotalPagesForSpecificCategory(categoryId: number) {
+  getTotalProductsForSpecificCategory(categoryId: number) {
     return this._httpClient
       .get<ApiResponse<number>>(
         `https://localhost:7147/api/Product/GetByCategoryCount?categoryId=${categoryId}`
-      )
-      .pipe(
-        tap({
-          next: (res) => {
-            this.productsCount = res.data;
-            this.totalPages = Math.ceil(this.productsCount / this.pageSize);
-            console.log(this.totalPages + 'Azan');
-          },
-        })
       )
       .pipe(
         map((res) => {
@@ -46,18 +31,10 @@ export class ProductService {
       );
   }
 
-  isPageAvailable() {
-    if (this.currentPage + 1 > this.totalPages!) {
-      return false;
-    }
-    return true;
-  }
-  //   isProductsAvailable
-  getPaginatedProducts() {
-    this.currentPage = this.currentPage + 1;
+  getPaginatedProducts(pageNumber: number, pageSize: number) {
     return this._httpClient
       .get<ApiResponse<Product[]>>(
-        `https://localhost:7147/api/Product/GetPaginated?pageSize=${this.pageSize}&pageNumber=${this.currentPage}`
+        `https://localhost:7147/api/Product/GetPaginated?pageSize=${pageSize}&pageNumber=${pageNumber}`
       )
       .pipe(
         map((res) => {
@@ -90,11 +67,14 @@ export class ProductService {
       );
   }
 
-  getPaginatedProductsByCategory(categoryId: number) {
-    this.currentPage = this.currentPage + 1;
+  getPaginatedProductsByCategory(
+    categoryId: number,
+    pageNumber: number,
+    pageSize: number
+  ) {
     return this._httpClient
       .get<ApiResponse<Product[]>>(
-        `https://localhost:7147/api/Product/GetByCategoryId?categoryId=${categoryId}&pageSize=${this.pageSize}&pageNumber=${this.currentPage}`
+        `https://localhost:7147/api/Product/GetByCategoryId?categoryId=${categoryId}&pageSize=${pageSize}&pageNumber=${pageNumber}`
       )
       .pipe(
         map((res) => {

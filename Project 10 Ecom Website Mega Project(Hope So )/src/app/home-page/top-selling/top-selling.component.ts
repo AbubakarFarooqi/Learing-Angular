@@ -28,16 +28,32 @@ import { CustomButtonComponent } from '../../shared/custom-button/custom-button.
 export class TopSellingComponent {
   private _productService = inject(ProductService);
   private _destroyRef = inject(DestroyRef);
+  totalPages?: number;
+  pageSize: number = 4;
+  currentPage: number = 0;
   products: Product[] = [];
   newProducts: Product[] = [];
   divParentState: 'expanded' = 'expanded';
 
   constructor() {
-    const subscription = this._productService.getPaginatedProducts().subscribe({
-      next: (data) => {
-        this.products = this.products?.concat(data);
-      },
+    const subscriptionOfProductsCount = this._productService
+      .getProductsCount()
+      .subscribe({
+        next: (count: number) => {
+          this.totalPages = Math.ceil(count / this.pageSize);
+        },
+      });
+    this._destroyRef.onDestroy(() => {
+      subscriptionOfProductsCount.unsubscribe();
     });
+    this.currentPage = this.currentPage + 1;
+    const subscription = this._productService
+      .getPaginatedProducts(this.currentPage, this.pageSize)
+      .subscribe({
+        next: (data) => {
+          this.products = this.products?.concat(data);
+        },
+      });
 
     this._destroyRef.onDestroy(() => {
       subscription.unsubscribe();
@@ -45,42 +61,29 @@ export class TopSellingComponent {
   }
 
   get isPageAvailable() {
-    return this._productService.isPageAvailable();
+    if (this.currentPage + 1 > this.totalPages!) {
+      return false;
+    }
+    return true;
   }
 
   onViewMore() {
-    const subscription = this._productService.getPaginatedProducts().subscribe({
-      next: (data) => {
-        // this.products = this.products?.concat(data);
-        this.newProducts = this.newProducts?.concat(data);
+    this.currentPage = this.currentPage + 1;
+    const subscription = this._productService
+      .getPaginatedProducts(this.currentPage, this.pageSize)
+      .subscribe({
+        next: (data) => {
+          // this.products = this.products?.concat(data);
+          this.newProducts = this.newProducts?.concat(data);
 
-        setTimeout(() => {
-          this.divParentState = 'expanded';
-        }, 0);
-      },
-    });
+          setTimeout(() => {
+            this.divParentState = 'expanded';
+          }, 0);
+        },
+      });
 
     this._destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     });
-
-    // // this.isTempHeight = true;
-    // this.newProducts = this.newProducts?.concat(...this.products);
-    // // this.products = this.products?.concat(...this.products);
-    // //if (finalHeight > initialHeight) {
-    // // this.divParentState =
-    // //   this.divParentState === 'collapsed' ? 'expanded' : 'collapsed';
-    // setTimeout(() => {
-    //   console.log(this.productsDiv);
-    //   // Store the final height
-    //   const finalHeight = this.productsDiv.nativeElement.offsetHeight;
-
-    //   // If the height has changed significantly, toggle the state
-    //   //if (finalHeight > initialHeight) {
-    //   // this.isTempHeight = false;
-    //   this.divParentState = 'expanded';
-    //   // this.divParentState === 'collapsed' ? 'expanded' : 'collapsed';
-    //   //}
-    // }, 1);
   }
 }

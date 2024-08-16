@@ -11,20 +11,31 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
   styleUrl: './products-by-category.component.css',
 })
 export class ProductsByCategoryComponent implements OnInit {
+  @Input({ required: true }) categoryId!: number;
+  @Input({ required: true }) categoryName!: string;
+  private _productService = inject(ProductService);
+  private _destroyRef = inject(DestroyRef);
+  products: Product[] = [];
+  totalProducts?: number;
+  pageSize: number = 16;
+  currentPage: number = 0;
+
   ngOnInit(): void {
     this._productService
-      .setTotalPagesForSpecificCategory(this.categoryId)
+      .getTotalProductsForSpecificCategory(this.categoryId)
       .subscribe({
         next: (count) => {
           this.totalProducts = count;
-          console.log(this.totalProducts + 'AzanAli');
         },
       });
-    this._productService.pageSize = 16;
-    this.pageSize = 16;
-    this._productService.currentPage = 0;
+
+    this.currentPage = this.currentPage + 1;
     const subscription = this._productService
-      .getPaginatedProductsByCategory(this.categoryId)
+      .getPaginatedProductsByCategory(
+        this.categoryId,
+        this.currentPage,
+        this.pageSize
+      )
       .subscribe({
         next: (data) => {
           this.products = this.products?.concat(data);
@@ -35,17 +46,16 @@ export class ProductsByCategoryComponent implements OnInit {
       subscription.unsubscribe();
     });
   }
-  @Input({ required: true }) categoryId!: number;
-  @Input({ required: true }) categoryName!: string;
-  private _productService = inject(ProductService);
-  private _destroyRef = inject(DestroyRef);
-  products: Product[] = [];
-  totalProducts?: number;
-  pageSize?: number;
 
   onPageChange(event: PaginatorState) {
+    this.currentPage = event.page! + 1;
+    console.log(this.currentPage + 'AzanAli');
     const subscription = this._productService
-      .getPaginatedProductsByCategory(this.categoryId)
+      .getPaginatedProductsByCategory(
+        this.categoryId,
+        this.currentPage,
+        this.pageSize
+      )
       .subscribe({
         next: (data) => {
           this.products = data;
