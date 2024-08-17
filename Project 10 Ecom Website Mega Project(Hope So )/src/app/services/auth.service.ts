@@ -22,6 +22,9 @@ export class AuthService {
   private expirationTime?: number;
 
   isTokenValid() {
+    this.currentTime = Date.now(); // Current time in milliseconds
+    console.log(this.expirationTime);
+    console.log(this.currentTime);
     if (!this.accessToken) {
       return false;
     }
@@ -32,6 +35,38 @@ export class AuthService {
       console.log('Token is still valid');
       return true;
     }
+  }
+
+  getNewAccessToken() {
+    const refreshTokenForm = new FormData();
+    refreshTokenForm.append('refreshToken', this.refreshToken!);
+    return this._httpClient
+      .post<ApiResponse<AuthResponse>>(
+        `https://localhost:7147/api/User/get-new-access-token`,
+        refreshTokenForm
+      )
+      .pipe(
+        tap({
+          next: (res) => {
+            console.log(res);
+            if (res.statusCode == 200) {
+              this.accessToken = res.data.access_token;
+              this.refreshToken = res.data.refresh_token;
+              this.expiresIn = res.data.expires_in * 1000; // Convert to milliseconds
+              this.currentTime = Date.now(); // Current time in milliseconds
+              this.expirationTime = this.currentTime + this.expiresIn;
+            }
+          },
+        })
+      )
+      .pipe(
+        map((res) => {
+          if (res.statusCode == 200) {
+            return true;
+          }
+          return false;
+        })
+      );
   }
 
   login(email: string, password: string) {
@@ -47,6 +82,7 @@ export class AuthService {
       .pipe(
         tap({
           next: (res) => {
+            console.log(res);
             if (res.statusCode == 200) {
               this.accessToken = res.data.access_token;
               this.refreshToken = res.data.refresh_token;
