@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, numberAttribute } from '@angular/core';
 import { ApiResponse } from '../../models/apiResponse.model';
 import { map, tap } from 'rxjs';
 
@@ -21,6 +21,39 @@ export class AuthService {
   private currentTime = Date.now(); // Current time in milliseconds
   private expirationTime?: number;
 
+  logout() {
+    this.accessToken = undefined;
+    this.refreshToken = undefined;
+    this.expiresIn = undefined;
+    this.expirationTime = undefined;
+    this.removeTokensFromBrowserStorage();
+  }
+  removeTokensFromBrowserStorage() {
+    window.localStorage.setItem('accessToken', '');
+    window.localStorage.setItem('refreshToken', '');
+    window.localStorage.setItem('expirationTime', '0');
+  }
+
+  loadTokensFromBrowserStorage() {
+    const accessToken = window.localStorage.getItem('accessToken');
+    const refreshToken = window.localStorage.getItem('refreshToken');
+    const expirationTime = window.localStorage.getItem('expirationTime');
+    if (!(accessToken || refreshToken || expirationTime)) {
+      return;
+    }
+    this.accessToken = accessToken!;
+    this.refreshToken = refreshToken!;
+    this.expirationTime = Number(expirationTime!);
+  }
+
+  saveTokensInBrowserStorage() {
+    window.localStorage.setItem('accessToken', this.accessToken!);
+    window.localStorage.setItem('refreshToken', this.refreshToken!);
+    window.localStorage.setItem(
+      'expirationTime',
+      this.expirationTime!.toString()
+    );
+  }
   isTokenValid() {
     this.currentTime = Date.now(); // Current time in milliseconds
     console.log(this.expirationTime);
@@ -55,6 +88,7 @@ export class AuthService {
               this.expiresIn = res.data.expires_in * 1000; // Convert to milliseconds
               this.currentTime = Date.now(); // Current time in milliseconds
               this.expirationTime = this.currentTime + this.expiresIn;
+              this.saveTokensInBrowserStorage();
             }
           },
         })
@@ -89,6 +123,7 @@ export class AuthService {
               this.expiresIn = res.data.expires_in * 1000; // Convert to milliseconds
               this.currentTime = Date.now(); // Current time in milliseconds
               this.expirationTime = this.currentTime + this.expiresIn;
+              this.saveTokensInBrowserStorage();
             }
           },
         })
