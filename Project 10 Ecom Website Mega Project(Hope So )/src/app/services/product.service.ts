@@ -67,6 +67,19 @@ export class ProductService {
       );
   }
 
+  getPaginatedProductNames(searchString: string) {
+    return this._httpClient
+      .get<ApiResponse<string[]>>(
+        `https://localhost:7147/api/Product/GetNames?searchString=${searchString}`
+      )
+      .pipe(
+        map((res) => {
+          console.log(res);
+          return res.data;
+        })
+      );
+  }
+
   getPaginatedProductsByCategory(
     categoryId: number,
     pageNumber: number,

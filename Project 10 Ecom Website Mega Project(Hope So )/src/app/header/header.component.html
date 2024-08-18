@@ -7,7 +7,7 @@
     </a>
 
     <nav
-      class="ml-7 mr-7 flex flex-wrap items-center text-base justify-start flex-grow text-or"
+      class="ml-7 mr-7 flex flex-row flex-wrap items-center text-base justify-start flex-grow text-or"
     >
       <a
         class="mr-5 text-black hover:text-gray-900 hover:scale-110 hover:transition"
@@ -23,7 +23,7 @@
         >Products</a
       >
 
-      <form class="flex-grow" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+      <!-- <form class="flex-grow" [formGroup]="searchForm" (ngSubmit)="onSearch()">
         <label
           for="default-search"
           class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -49,6 +49,7 @@
               />
             </svg>
           </div>
+         
           <input
             formControlName="searchInput"
             type="search"
@@ -58,7 +59,36 @@
             required
           />
         </div>
-      </form>
+      </form> -->
+
+      <!-- <ng-select
+        class="h-8 flex-grow leading-none text-gray-900 border border-gray-300 rounded-3xl bg-gray-50 focus:ring-blue-500 focus:border-blue-"
+        [(ngModel)]="selectedCar"
+      >
+        @for (car of cars; track car.id) {
+        <ng-option [value]="car.id">{{ car.name }}</ng-option>
+        }
+      </ng-select> -->
+
+      <!--Using items input-->
+      <!-- <ng-select
+        class="h-8 flex-grow leading-none text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-"
+        [items]="cars"
+        placeholder="Search Products"
+        bindLabel="name"
+        bindValue="id"
+        (search)="onTypingInSearch($event)"
+        [(ngModel)]="selectedCar"
+      >
+      </ng-select> -->
+      <ng-select
+        class="h-8 flex-grow leading-none text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-"
+        [items]="productSearchNames"
+        placeholder="Search Products"
+        (search)="onTypingInSearch($event)"
+        [(ngModel)]="selectedProduct"
+      >
+      </ng-select>
     </nav>
 
     <div class="flex justify-between items-center flex-row m-auto w-16">
@@ -107,6 +137,3 @@
     </div>
   </div>
 </header>
-<!-- <button customClass="" DarkButton mode="dark">
-  <span> Shop Now </span>
-</button> -->
