@@ -5,19 +5,25 @@
       @for(product of products; track product.productID){
       <div [@divParent]="divParentState" class="pt-16">
         <app-product-card
+          (productClick)="onProductClick($event)"
           [imageUrl]="product.imageUrl"
           [title]="product.name"
           [price]="product.price"
           [rating]="3"
+          [productId]="product.productID"
+          [description]="product.description"
         />
       </div>
       } @for(product of newProducts; track product.productID){
       <div [@divParent]="divParentState" class="pt-16 h-0 overflow-hidden">
         <app-product-card
+          (productClick)="onProductClick($event)"
           [imageUrl]="product.imageUrl"
           [title]="product.name"
           [price]="product.price"
           [rating]="3"
+          [productId]="product.productID"
+          [description]="product.description"
         />
       </div>
       }

@@ -14,6 +14,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './services/auth.service';
 import { inject } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
+import { ProductViewToBuyComponent } from './product-view-to-buy/product-view-to-buy.component';
 
 // const TokenValidation: CanMatchFn = (route, segments) => {
 //   const authService = inject(AuthService);
@@ -46,14 +47,16 @@ const TokenValidation: () => Observable<boolean | UrlTree> = () => {
 
 export const routes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent,
+    path: 'product-view/:productId',
+    component: ProductViewToBuyComponent,
   },
-
   {
     path: '',
     component: HomePageComponent,
-    // component: LoginComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'products',

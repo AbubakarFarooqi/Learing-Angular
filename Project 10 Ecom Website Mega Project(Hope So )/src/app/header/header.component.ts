@@ -45,7 +45,7 @@ export class HeaderComponent {
     if (event.term === '') {
       this.productSearchNames = [];
     }
-    this._productService.getPaginatedProductNames(event.term).subscribe({
+    this._productService.getPaginatedProductNames(event.term, 1, 10).subscribe({
       next: (names) => {
         this.productSearchNames = names;
         console.log(names);

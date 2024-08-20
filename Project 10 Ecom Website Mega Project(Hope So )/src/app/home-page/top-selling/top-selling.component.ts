@@ -10,6 +10,7 @@ import { ProductCardComponent } from '../../shared/product-card/product-card.com
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../models/product.model';
 import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-selling',
@@ -28,6 +29,7 @@ import { CustomButtonComponent } from '../../shared/custom-button/custom-button.
 export class TopSellingComponent {
   private _productService = inject(ProductService);
   private _destroyRef = inject(DestroyRef);
+  private _router = inject(Router);
   totalPages?: number;
   pageSize: number = 4;
   currentPage: number = 0;
@@ -85,5 +87,9 @@ export class TopSellingComponent {
     this._destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     });
+  }
+
+  onProductClick($event: Product) {
+    this._router.navigate(['product-view', $event.productID]);
   }
 }

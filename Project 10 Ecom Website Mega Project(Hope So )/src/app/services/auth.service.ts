@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, numberAttribute } from '@angular/core';
 import { ApiResponse } from '../../models/apiResponse.model';
 import { map, tap } from 'rxjs';
+import { ApiUrls } from './urls';
 
 interface AuthResponse {
   access_token: string;
@@ -56,16 +57,12 @@ export class AuthService {
   }
   isTokenValid() {
     this.currentTime = Date.now(); // Current time in milliseconds
-    console.log(this.expirationTime);
-    console.log(this.currentTime);
     if (!this.accessToken) {
       return false;
     }
     if (this.currentTime > this.expirationTime!) {
-      console.log('Token has expired');
       return false;
     } else {
-      console.log('Token is still valid');
       return true;
     }
   }
@@ -75,13 +72,12 @@ export class AuthService {
     refreshTokenForm.append('refreshToken', this.refreshToken!);
     return this._httpClient
       .post<ApiResponse<AuthResponse>>(
-        `https://localhost:7147/api/User/get-new-access-token`,
+        ApiUrls.auth.getNewAccessToken,
         refreshTokenForm
       )
       .pipe(
         tap({
           next: (res) => {
-            console.log(res);
             if (res.statusCode == 200) {
               this.accessToken = res.data.access_token;
               this.refreshToken = res.data.refresh_token;
@@ -109,14 +105,13 @@ export class AuthService {
     loginFormData.append('Password', password);
     return this._httpClient
       .post<ApiResponse<AuthResponse>>(
-        `https://localhost:7147/api/User/login`,
+        ApiUrls.auth.login,
         // { Username: email, Password: password }
         loginFormData
       )
       .pipe(
         tap({
           next: (res) => {
-            console.log(res);
             if (res.statusCode == 200) {
               this.accessToken = res.data.access_token;
               this.refreshToken = res.data.refresh_token;

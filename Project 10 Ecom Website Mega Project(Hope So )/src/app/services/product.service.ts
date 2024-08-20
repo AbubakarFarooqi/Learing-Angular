@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ApiResponse } from '../../models/apiResponse.model';
 import { Product } from '../../models/product.model';
-import { map, tap } from 'rxjs';
+import { map, switchAll, tap } from 'rxjs';
 import { type TopFourProducts } from '../../models/topFourProduct.model';
+import { ApiUrls } from './urls';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class ProductService {
   _httpClient = inject(HttpClient);
   getProductsCount() {
     return this._httpClient
-      .get<ApiResponse<number>>('https://localhost:7147/api/Product/GetCount')
+      .get<ApiResponse<number>>(ApiUrls.products.getProductsCount)
       .pipe(
         map((res) => {
           return res.data;
@@ -22,7 +23,7 @@ export class ProductService {
   getTotalProductsForSpecificCategory(categoryId: number) {
     return this._httpClient
       .get<ApiResponse<number>>(
-        `https://localhost:7147/api/Product/GetByCategoryCount?categoryId=${categoryId}`
+        `${ApiUrls.products.getTotalProductsForSpecificCategory}?categoryId=${categoryId}`
       )
       .pipe(
         map((res) => {
@@ -34,7 +35,7 @@ export class ProductService {
   getPaginatedProducts(pageNumber: number, pageSize: number) {
     return this._httpClient
       .get<ApiResponse<Product[]>>(
-        `https://localhost:7147/api/Product/GetPaginated?pageSize=${pageSize}&pageNumber=${pageNumber}`
+        `${ApiUrls.products.getPaginatedProducts}?pageSize=${pageSize}&pageNumber=${pageNumber}`
       )
       .pipe(
         map((res) => {
@@ -47,7 +48,7 @@ export class ProductService {
   getFourProductOfEachCategory() {
     return this._httpClient
       .get<ApiResponse<{ [key: string]: Product[] }>>(
-        `https://localhost:7147/api/Product/GetFourOfAllCategories`
+        ApiUrls.products.getFourProductOfEachCategory
       )
       .pipe(
         map((res) => {
@@ -67,10 +68,14 @@ export class ProductService {
       );
   }
 
-  getPaginatedProductNames(searchString: string) {
+  getPaginatedProductNames(
+    searchString: string,
+    pageNumber: number,
+    pageSize: number
+  ) {
     return this._httpClient
       .get<ApiResponse<string[]>>(
-        `https://localhost:7147/api/Product/GetNames?searchString=${searchString}`
+        `${ApiUrls.products.getPaginatedProductNames}?searchString=${searchString}&pageNumber=${pageNumber}&pageSize=${pageSize}`
       )
       .pipe(
         map((res) => {
@@ -87,7 +92,37 @@ export class ProductService {
   ) {
     return this._httpClient
       .get<ApiResponse<Product[]>>(
-        `https://localhost:7147/api/Product/GetByCategoryId?categoryId=${categoryId}&pageSize=${pageSize}&pageNumber=${pageNumber}`
+        `${ApiUrls.products.getPaginatedProductsByCategory}?categoryId=${categoryId}&pageSize=${pageSize}&pageNumber=${pageNumber}`
+      )
+      .pipe(
+        map((res) => {
+          console.log(res);
+          return res.data;
+        })
+      );
+  }
+
+  getProductById(productId: number) {
+    return this._httpClient
+      .get<ApiResponse<Product>>(
+        `${ApiUrls.products.getProductById}?id=${productId}`
+      )
+      .pipe(
+        map((res) => {
+          console.log(res);
+          return res.data;
+        })
+      );
+  }
+
+  getPaginatedProductsThatMatchName(
+    searchString: string,
+    pageNumber: number,
+    pageSize: number
+  ) {
+    return this._httpClient
+      .get<ApiResponse<Product[]>>(
+        `${ApiUrls.products.getPaginatedProductsThatMatchName}?searchString=${searchString}&pageNumber=${pageNumber}&pageSize=${pageSize}`
       )
       .pipe(
         map((res) => {

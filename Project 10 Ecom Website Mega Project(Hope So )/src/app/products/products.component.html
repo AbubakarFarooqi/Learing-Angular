@@ -30,10 +30,13 @@
       @for(product of group.value ; track product.productID){
 
       <app-product-card
+        (productClick)="onProductClick($event)"
         [title]="product.name"
         [imageUrl]="product.imageUrl"
         [price]="product.price"
         [rating]="4"
+        [productId]="product.productID"
+        [description]="product.description"
       />
       }
     </div>

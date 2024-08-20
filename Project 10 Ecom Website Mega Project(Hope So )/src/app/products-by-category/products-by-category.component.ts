@@ -3,6 +3,7 @@ import { Product } from '../../models/product.model';
 import { ProductService } from '../services/product.service';
 import { ProductCardComponent } from '../shared/product-card/product-card.component';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-products-by-category',
   standalone: true,
@@ -15,6 +16,7 @@ export class ProductsByCategoryComponent implements OnInit {
   @Input({ required: true }) categoryName!: string;
   private _productService = inject(ProductService);
   private _destroyRef = inject(DestroyRef);
+  private _router = inject(Router);
   products: Product[] = [];
   totalProducts?: number;
   pageSize: number = 16;
@@ -65,5 +67,9 @@ export class ProductsByCategoryComponent implements OnInit {
     this._destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     });
+  }
+
+  onProductClick($event: Product) {
+    this._router.navigate(['product-view', $event.productID]);
   }
 }

@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApiResponse } from '../../models/apiResponse.model';
 import { ReviewModel } from '../../models/review.model';
 import { map } from 'rxjs';
+import { ApiUrls } from './urls';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class ReviewService {
   currentPage = 0;
   constructor() {
     this._httpClient
-      .get<ApiResponse<number>>('https://localhost:7147/api/Review/GetCount')
+      .get<ApiResponse<number>>(ApiUrls.reviews.getCount)
       .subscribe({
         next: (res) => {
           this.reviewsCount = res.data;
@@ -34,7 +35,7 @@ export class ReviewService {
     this.currentPage = this.currentPage + 1;
     return this._httpClient
       .get<ApiResponse<ReviewModel[]>>(
-        `https://localhost:7147/api/Review/GetPaginated?pageSize=${this.pageSize}&pageNumber=${this.currentPage}`
+        `${ApiUrls.reviews.getPaginatedReviews}?pageSize=${this.pageSize}&pageNumber=${this.currentPage}`
       )
       .pipe(
         map((res) => {
