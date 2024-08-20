@@ -44,4 +44,17 @@ export class ReviewService {
         })
       );
   }
+
+  getTopByProductId(productId: number, pageSize: number) {
+    return this._httpClient
+      .get<ApiResponse<ReviewModel[]>>(
+        `${ApiUrls.reviews.getTopByProductId}?productId=${productId}&pageSize=${pageSize}`
+      )
+      .pipe(
+        map((res) => {
+          console.log(res);
+          return res.data;
+        })
+      );
+  }
 }

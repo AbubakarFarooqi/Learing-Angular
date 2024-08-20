@@ -1,13 +1,4 @@
-import {
-  ActivatedRoute,
-  CanActivate,
-  CanMatchFn,
-  RedirectCommand,
-  Route,
-  Router,
-  Routes,
-  UrlTree,
-} from '@angular/router';
+import { Route, Router, Routes, UrlTree } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductsComponent } from './products/products.component';

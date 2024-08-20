@@ -17,6 +17,7 @@ export const ApiUrls = {
   reviews: {
     getCount: `http://${hostIp}:${portN}/api/Review/GetCount`,
     getPaginatedReviews: `http://${hostIp}:${portN}/api/Review/GetPaginated`,
+    getTopByProductId: `http://${hostIp}:${portN}/api/Review/GetTopByProductId`,
   },
   auth: {
     getNewAccessToken: `http://${hostIp}:${portN}/api/User/get-new-access-token`,
