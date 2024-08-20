@@ -87,4 +87,7 @@ export class HeaderComponent {
   onLoginClick() {
     this._router.navigate(['login']);
   }
+  onCartClick() {
+    this._router.navigate(['cart']);
+  }
 }

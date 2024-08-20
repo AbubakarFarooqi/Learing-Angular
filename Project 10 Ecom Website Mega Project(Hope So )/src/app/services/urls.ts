@@ -1,26 +1,26 @@
-// const hostIp = "localhost"
-// const portN = "7147"
-const hostIp = '172.20.1.225';
-const portN = '5005';
+const hostIp = 'https://localhost';
+const portN = '7147';
+// const hostIp = '172.20.1.225';
+// const portN = '5005';
 
 export const ApiUrls = {
   products: {
-    getProductsCount: `http://${hostIp}:${portN}/api/Product/GetCount`,
-    getTotalProductsForSpecificCategory: `http://${hostIp}:${portN}/api/Product/GetByCategoryCount`,
-    getPaginatedProducts: `http://${hostIp}:${portN}/api/Product/GetPaginated`,
-    getFourProductOfEachCategory: `http://${hostIp}:${portN}/api/Product/GetFourOfAllCategories`,
-    getPaginatedProductNames: `http://${hostIp}:${portN}/api/Product/GetNames`,
-    getPaginatedProductsByCategory: `http://${hostIp}:${portN}/api/Product/GetByCategoryId`,
-    getProductById: `http://${hostIp}:${portN}/api/Product/GetbyId`,
-    getPaginatedProductsThatMatchName: `http://${hostIp}:${portN}/api/Product/GetThatMatchName`,
+    getProductsCount: `${hostIp}:${portN}/api/Product/GetCount`,
+    getTotalProductsForSpecificCategory: `${hostIp}:${portN}/api/Product/GetByCategoryCount`,
+    getPaginatedProducts: `${hostIp}:${portN}/api/Product/GetPaginated`,
+    getFourProductOfEachCategory: `${hostIp}:${portN}/api/Product/GetFourOfAllCategories`,
+    getPaginatedProductNames: `${hostIp}:${portN}/api/Product/GetNames`,
+    getPaginatedProductsByCategory: `${hostIp}:${portN}/api/Product/GetByCategoryId`,
+    getProductById: `${hostIp}:${portN}/api/Product/GetbyId`,
+    getPaginatedProductsThatMatchName: `${hostIp}:${portN}/api/Product/GetThatMatchName`,
   },
   reviews: {
-    getCount: `http://${hostIp}:${portN}/api/Review/GetCount`,
-    getPaginatedReviews: `http://${hostIp}:${portN}/api/Review/GetPaginated`,
-    getTopByProductId: `http://${hostIp}:${portN}/api/Review/GetTopByProductId`,
+    getCount: `${hostIp}:${portN}/api/Review/GetCount`,
+    getPaginatedReviews: `${hostIp}:${portN}/api/Review/GetPaginated`,
+    getTopByProductId: `${hostIp}:${portN}/api/Review/GetTopByProductId`,
   },
   auth: {
-    getNewAccessToken: `http://${hostIp}:${portN}/api/User/get-new-access-token`,
-    login: `http://${hostIp}:${portN}/api/User/login`,
+    getNewAccessToken: `${hostIp}:${portN}/api/User/get-new-access-token`,
+    login: `${hostIp}:${portN}/api/User/login`,
   },
 };

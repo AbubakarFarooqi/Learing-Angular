@@ -9,6 +9,7 @@ import { inject } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ProductViewToBuyComponent } from './product-view-to-buy/product-view-to-buy.component';
 import { SearchedProductsComponent } from './searched-products/searched-products.component';
+import { CartComponent } from './cart/cart.component';
 
 // const TokenValidation: CanMatchFn = (route, segments) => {
 //   const authService = inject(AuthService);
@@ -53,6 +54,10 @@ export const routes: Routes = [
     component: ProductViewToBuyComponent,
   },
   {
+    path: 'cart',
+    component: CartComponent,
+  },
+  {
     path: '',
     component: HomePageComponent,
   },
@@ -62,7 +67,7 @@ export const routes: Routes = [
   },
   {
     path: 'products',
-    canMatch: [TokenValidation],
+    //canMatch: [TokenValidation],
     component: ProductsComponent,
   },
   {

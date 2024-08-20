@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, ɵNG_INJ_DEF } from '@angular/core';
 import { StarRatingComponent } from '../shared/star-rating/star-rating.component';
 import { CurrencyPipe } from '@angular/common';
 import { CustomButtonComponent } from '../shared/custom-button/custom-button.component';
@@ -6,6 +6,9 @@ import { ProductService } from '../services/product.service';
 import { ReviewComponent } from '../shared/review/review.component';
 import { ReviewService } from '../services/review.service';
 import { ReviewModel } from '../../models/review.model';
+import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-view-to-buy',
@@ -22,6 +25,9 @@ import { ReviewModel } from '../../models/review.model';
 export class ProductViewToBuyComponent implements OnInit {
   private _productService = inject(ProductService);
   private _reviewService = inject(ReviewService);
+  private _cartService = inject(CartService);
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
 
   ngOnInit(): void {
     this._productService.getProductById(this.productId).subscribe({
@@ -46,4 +52,21 @@ export class ProductViewToBuyComponent implements OnInit {
   rating?: number = 3;
   description?: string = 'lorem';
   @Input({ required: true }) productId!: number;
+
+  addItemToCart() {
+    if (!this._authService.isTokenValid()) {
+      this._router.navigate(['login'], {
+        queryParams: {
+          returnUrl: 'cart',
+        },
+      });
+    }
+    this._cartService.insertItem({
+      description: this.description!,
+      imageUrl: this.imageUrl!,
+      price: this.price,
+      productId: this.productId,
+      title: this.title,
+    });
+  }
 }
