@@ -1,7 +1,9 @@
 import {
+  ActivatedRoute,
   CanActivate,
   CanMatchFn,
   RedirectCommand,
+  Route,
   Router,
   Routes,
   UrlTree,
@@ -34,7 +36,9 @@ import { SearchedProductsComponent } from './searched-products/searched-products
 //   return new RedirectCommand(router.parseUrl('login'));
 // };
 
-const TokenValidation: () => Observable<boolean | UrlTree> = () => {
+const TokenValidation: (route: Route) => Observable<boolean | UrlTree> = (
+  route
+) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   if (authService.isTokenValid()) {
@@ -42,7 +46,9 @@ const TokenValidation: () => Observable<boolean | UrlTree> = () => {
   }
   return authService.getNewAccessToken().pipe(
     map(() => true),
-    catchError(() => of(router.parseUrl('login')))
+    catchError(() =>
+      of(router.parseUrl(`/login?returnUrl=${encodeURIComponent(route.path!)}`))
+    )
   );
 };
 
