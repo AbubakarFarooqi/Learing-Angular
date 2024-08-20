@@ -15,8 +15,8 @@ export const ApiUrls = {
     getPaginatedProductsThatMatchName: `http://${hostIp}:${portN}/api/Product/GetThatMatchName`,
   },
   reviews: {
-    getCount: `https://${hostIp}:${portN}/api/Review/GetCount`,
-    getPaginatedReviews: `https://${hostIp}:${portN}/api/Review/GetPaginated`,
+    getCount: `http://${hostIp}:${portN}/api/Review/GetCount`,
+    getPaginatedReviews: `http://${hostIp}:${portN}/api/Review/GetPaginated`,
   },
   auth: {
     getNewAccessToken: `http://${hostIp}:${portN}/api/User/get-new-access-token`,

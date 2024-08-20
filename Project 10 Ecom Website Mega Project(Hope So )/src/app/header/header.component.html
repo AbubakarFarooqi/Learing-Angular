@@ -87,6 +87,7 @@
         placeholder="Search Products"
         (search)="onTypingInSearch($event)"
         [(ngModel)]="selectedProduct"
+        (keydown.enter)="onEnter()"
       >
       </ng-select>
     </nav>

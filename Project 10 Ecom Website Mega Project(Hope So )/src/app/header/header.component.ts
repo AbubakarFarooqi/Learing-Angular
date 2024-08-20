@@ -40,7 +40,17 @@ import { ProductService } from '../services/product.service';
 })
 export class HeaderComponent {
   private _productService = inject(ProductService);
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
   productSearchNames: string[] = [];
+  selectedProduct?: string;
+  get isUserLoggedIn() {
+    return this._authService.isTokenValid();
+  }
+  searchForm = new FormGroup({
+    searchInput: new FormControl('', [Validators.required]),
+  });
+
   onTypingInSearch(event: { term: string; items: any[] }) {
     if (event.term === '') {
       this.productSearchNames = [];
@@ -52,16 +62,13 @@ export class HeaderComponent {
       },
     });
   }
-  selectedProduct?: string;
-
-  private _authService = inject(AuthService);
-  private _router = inject(Router);
-  get isUserLoggedIn() {
-    return this._authService.isTokenValid();
+  onEnter() {
+    if (this.selectedProduct != null) {
+      this._router.navigate(['product/searched-product'], {
+        queryParams: { searchString: this.selectedProduct },
+      });
+    }
   }
-  searchForm = new FormGroup({
-    searchInput: new FormControl('', [Validators.required]),
-  });
   onSearch() {
     if (this.searchForm.invalid) {
       return;
