@@ -53,6 +53,9 @@ export class ProductViewToBuyComponent implements OnInit {
   description?: string = 'lorem';
   @Input({ required: true }) productId!: number;
 
+  get isAddedInCart() {
+    return this._cartService.isFound(this.productId);
+  }
   addItemToCart() {
     if (!this._authService.isTokenValid()) {
       this._router.navigate(['login'], {
@@ -61,12 +64,15 @@ export class ProductViewToBuyComponent implements OnInit {
         },
       });
     }
-    this._cartService.insertItem({
-      description: this.description!,
-      imageUrl: this.imageUrl!,
-      price: this.price,
-      productId: this.productId,
-      title: this.title,
-    });
+    const confirm = window.confirm('Do you want to add it to cart');
+    if (confirm) {
+      this._cartService.insertItem({
+        description: this.description!,
+        imageUrl: this.imageUrl!,
+        price: this.price,
+        productId: this.productId,
+        title: this.title,
+      });
+    }
   }
 }

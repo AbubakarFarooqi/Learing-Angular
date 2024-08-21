@@ -17,4 +17,8 @@ export class CartComponent {
     console.log(this._cartService.cartItems);
     return this._cartService.cartItems;
   }
+
+  deleteCartItem(productId: number) {
+    this._cartService.deleteItem(productId);
+  }
 }

@@ -14,4 +14,17 @@ export class CartService {
     this.cartItems.push(cartItem);
     console.log(this.cartItems);
   }
+
+  deleteItem(id: number) {
+    this.cartItems = this.cartItems.filter((item) => {
+      if (item.productId != id) return true;
+      return false;
+    });
+  }
+
+  isFound(productId: number) {
+    return this.cartItems.find((item) => {
+      return item.productId === productId;
+    });
+  }
 }

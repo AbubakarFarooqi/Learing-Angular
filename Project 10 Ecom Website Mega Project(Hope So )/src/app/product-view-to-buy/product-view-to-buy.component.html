@@ -16,9 +16,15 @@
         <span class="ml-2 font-bold text-xl mb-2">{{ price | currency }}</span>
         <span class="ml-2 text-gray-500 mb-2">{{ description }}</span>
       </div>
+      @if(isAddedInCart){
+      <button customButton mode="light" disabled (click)="addItemToCart()">
+        Added
+      </button>
+      } @else {
       <button customButton mode="dark" (click)="addItemToCart()">
         Add to cart
       </button>
+      }
     </div>
   </div>
 
